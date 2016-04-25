@@ -22,7 +22,7 @@ module.exports = function(gruntOrShipit) {
       var source = path.join(shipit.config.shared.symlinkPath, item.path);
       var target = path.join(shipit.releasesPath, shipit.releaseDirname, item.path);
       var check = function() {
-        var cmd = sprintf('if ( [ -e "%(target)s" ] && ! [ -h "%(target)s" ] ); then echo false; fi', {
+        var cmd = sprintf('if ( [ -e %(target)s ] && ! [ -h %(target)s ] ); then echo false; fi', {
           target: target
         });
 
@@ -41,7 +41,7 @@ module.exports = function(gruntOrShipit) {
 
       // If symlink target is not already a symlink, remove it, then create symlink.
       .then(function() {
-        var cmd = sprintf('if ( ! [ -h "%(target)s" ] ); then rm -rf "%(target)s" 2> /dev/null; ln -s "%(source)s" "%(target)s"; fi', {
+        var cmd = sprintf('if ( ! [ -h %(target)s ] ); then rm -rf %(target)s 2> /dev/null; ln -s %(source)s %(target)s; fi', {
           source: source,
           target: target
         });
